@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atmos — Weather Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header>
+    <div>
+      <div class="logo">atmos<span>.</span></div>
+      <div class="logo-sub">Real-time Weather Intelligence</div>
+    </div>
+    <div class="status-dot">
+      <div class="dot" id="statusDot"></div>
+      <span id="statusText">Open-Meteo API · Live</span>
+    </div>
+  </header>
+
+  <!-- SEARCH -->
+  <section class="search-section">
+    <div class="search-eyebrow">Atmospheric Conditions</div>
+    <h1 class="search-title">Any city.<br><em>Right now.</em></h1>
+    <div class="search-form">
+      <input class="search-input" type="text" id="cityInput" placeholder="Enter city name — e.g. Tokyo, Berlin…" autocomplete="off" />
+      <button class="search-btn" id="searchBtn" onclick="handleSearch()">Fetch Data</button>
+    </div>
+  </section>
+
+  <!-- MESSAGES -->
+  <div class="message-box" id="msgBox"></div>
+
+  <!-- ATMOSPHERE RING -->
+  <div class="atmosphere-wrap">
+    <div class="atmosphere-ring" id="atmosphereRing">
+      <div class="ring-pulse" id="ringPulse"></div>
+      <svg class="ring-svg" viewBox="0 0 220 220">
+        <circle class="ring-track" cx="110" cy="110" r="100"/>
+        <circle class="ring-arc" id="ringArc" cx="110" cy="110" r="100"
+          stroke-dasharray="628" stroke-dashoffset="628"
+          transform="rotate(-90 110 110)"/>
+      </svg>
+      <div class="ring-content">
+        <div class="ring-temp"><span id="ringTemp">--</span><span class="ring-unit">°C</span></div>
+        <div class="ring-desc" id="ringDesc">--</div>
+        <div class="ring-city" id="ringCity"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMPTY STATE -->
+  <div class="empty-state" id="emptyState">
+    <div class="empty-icon">🌐</div>
+    <div class="empty-title">No location loaded</div>
+    <div class="empty-text">Search for any city to pull live atmospheric data — temperature, humidity, wind, UV index, and more.</div>
+  </div>
+
+  <!-- MAIN METRICS -->
+  <div class="metrics-grid" id="metricsGrid">
+    <div class="metric-card">
+      <span class="metric-icon">🌡️</span>
+      <div class="metric-label">Feels Like</div>
+      <div class="metric-value" id="feelsLike">--<span class="metric-unit">°C</span></div>
+      <div class="metric-sub" id="feelsLikeSub"></div>
+    </div>
+    <div class="metric-card">
+      <span class="metric-icon">💧</span>
+      <div class="metric-label">Humidity</div>
+      <div class="metric-value" id="humidity">--<span class="metric-unit">%</span></div>
+      <div class="metric-sub" id="humiditySub"></div>
+    </div>
+    <div class="metric-card">
+      <span class="metric-icon">💨</span>
+      <div class="metric-label">Wind Speed</div>
+      <div class="metric-value" id="windSpeed">--<span class="metric-unit"> km/h</span></div>
+      <div class="metric-sub" id="windDir"></div>
+    </div>
+    <div class="metric-card">
+      <span class="metric-icon">☀️</span>
+      <div class="metric-label">UV Index</div>
+      <div class="metric-value" id="uvIndex">--</div>
+      <div class="metric-sub" id="uvSub"></div>
+    </div>
+  </div>
+
+  <!-- DETAIL ROW -->
+  <div class="detail-row" id="detailRow">
+    <div class="detail-card">
+      <div class="detail-icon-wrap">📊</div>
+      <div>
+        <div class="detail-label">Pressure</div>
+        <div class="detail-value" id="pressure">-- hPa</div>
+      </div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-icon-wrap">👁️</div>
+      <div>
+        <div class="detail-label">Visibility</div>
+        <div class="detail-value" id="visibility">-- km</div>
+      </div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-icon-wrap">🌧️</div>
+      <div>
+        <div class="detail-label">Precipitation</div>
+        <div class="detail-value" id="precipitation">-- mm</div>
+      </div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-icon-wrap">🌬️</div>
+      <div>
+        <div class="detail-label">Wind Gusts</div>
+        <div class="detail-value" id="windGusts">-- km/h</div>
+      </div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-icon-wrap">🌅</div>
+      <div>
+        <div class="detail-label">Cloud Cover</div>
+        <div class="detail-value" id="cloudCover">--%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOURLY FORECAST -->
+  <div id="hourlySection" style="display:none;">
+    <div class="section-label">12-Hour Forecast</div>
+    <div class="hourly-strip" id="hourlyStrip"></div>
+  </div>
+
+  <footer>
+    Powered by <a href="https://open-meteo.com" target="_blank">Open-Meteo API</a> &amp;
+    <a href="https://geocoding-api.open-meteo.com" target="_blank">Open-Meteo Geocoding</a> ·
+    No API key required · Data updates hourly
+  </footer>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
